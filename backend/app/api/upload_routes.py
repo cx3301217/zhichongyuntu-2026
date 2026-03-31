@@ -10,7 +10,7 @@ from datetime import datetime
 import logging
 
 # ⭐ 导入状态管理模块
-from app.data_status import set_data_uploaded, get_data_status, reset_data_status
+from backend.app.data_status import set_data_uploaded, get_data_status, reset_data_status
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
@@ -89,7 +89,7 @@ async def upload_training_data(
         
         # 2. 获取全局预测器并加载新数据
         try:
-            from app.api.region_routes import region_predictor
+            from backend.app.api.region_routes import region_predictor
             
             if region_predictor is not None:
                 logger.info("📊 开始加载CSV数据到预测器...")

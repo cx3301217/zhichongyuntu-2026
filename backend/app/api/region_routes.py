@@ -28,7 +28,7 @@ class UserLocation(BaseModel):
 def check_data_uploaded():
     """检查数据是否已上传"""
     try:
-        from app.data_status import is_data_uploaded
+        from backend.app.data_status import is_data_uploaded
         return is_data_uploaded()
     except Exception as e:
         print(f"检查数据状态失败: {e}")
@@ -38,7 +38,7 @@ def init_region_predictor():
     """初始化区域预测器"""
     global region_predictor
     try:
-        from app.region_predictor import RegionPredictor
+        from backend.app.region_predictor import RegionPredictor
         region_predictor = RegionPredictor(
             model_path="models/tft_high_performance.pkl"  # 使用高性能TFT模型（R²>0.90）
         )
