@@ -1,0 +1,49 @@
+# Zeabur 部署配置文件
+# 文档: https://zeabur.com/docs/deploy/config
+
+[project]
+name = "zhichong-yuntu"
+
+# ==================== 后端服务 ====================
+[[services]]
+name = "backend"
+path = "./backend"
+
+# 构建命令
+buildCommand = "pip install -r requirements.txt"
+
+# 启动命令
+startCommand = "uvicorn app.main:app --host 0.0.0.0 --port 8000"
+
+# 端口
+port = 8000
+
+# 健康检查路径
+healthcheck = "/api/health"
+
+# 环境变量
+[services.backend.env]
+PORT = "8000"
+PYTHONUNBUFFERED = "1"
+
+# ==================== 前端服务 ====================
+[[services]]
+name = "frontend"
+path = "./frontend"
+
+# 构建命令
+buildCommand = "npm install && npm run build"
+
+# 启动命令 - 使用 serve 静态文件服务
+startCommand = "npx serve -s build -l 3000"
+
+# 端口
+port = 3000
+
+# 环境变量
+[services.frontend.env]
+REACT_APP_API_BASE_URL = "http://localhost:8000"
+
+# 服务依赖 - 前端依赖后端
+[services.frontend.deps]
+service = "backend"

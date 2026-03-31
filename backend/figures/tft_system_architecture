@@ -1,0 +1,102 @@
+digraph tft_system {
+	bgcolor=white rankdir=TB
+	subgraph cluster_fe {
+		color="#17306E" label="前端层 Frontend (React)"
+		C1 [label="RegionMap
+地图监控" color="#17306E" fillcolor="#6A4C93" fontcolor="#ffffff" penwidth=1.5 shape=rect style="rounded,filled"]
+		C2 [label="DataUpload
+数据上传" color="#17306E" fillcolor="#6A4C93" fontcolor="#ffffff" penwidth=1.5 shape=rect style="rounded,filled"]
+		C3 [label="RecommendPage
+智能推荐" color="#17306E" fillcolor="#6A4C93" fontcolor="#ffffff" penwidth=1.5 shape=rect style="rounded,filled"]
+		C4 [label="Dashboards
+指标看板" color="#17306E" fillcolor="#6A4C93" fontcolor="#ffffff" penwidth=1.5 shape=rect style="rounded,filled"]
+		SVC [label="regionMapService.js
+axios 客户端" color="#17306E" fillcolor="#6A4C93" fontcolor="#ffffff" penwidth=1.5 shape=rect style="rounded,filled"]
+		MAP [label="AMap 地图SDK" color="#17306E" fillcolor="#6A4C93" fontcolor="#ffffff" penwidth=1.5 shape=rect style="rounded,filled"]
+	}
+	subgraph cluster_api {
+		color="#17306E" label="后端网关 Backend (FastAPI)"
+		GW [label="app/main.py
+CORS/路由/健康检查" color="#17306E" fillcolor="#0FA3B1" fontcolor="#ffffff" penwidth=1.5 shape=rect style="rounded,filled"]
+		subgraph cluster_routes {
+			label="API 路由 app/api/*"
+			R1 [label="GET /api/regions/all" color="#17306E" fillcolor="#0FA3B1" fontcolor="#ffffff" penwidth=1.5 shape=rect style="rounded,filled"]
+			R2 [label="GET /api/regions/{id}/predict" color="#17306E" fillcolor="#0FA3B1" fontcolor="#ffffff" penwidth=1.5 shape=rect style="rounded,filled"]
+			R3 [label="POST /api/recommend" color="#17306E" fillcolor="#0FA3B1" fontcolor="#ffffff" penwidth=1.5 shape=rect style="rounded,filled"]
+			R4 [label="POST /api/upload-training-data" color="#17306E" fillcolor="#0FA3B1" fontcolor="#ffffff" penwidth=1.5 shape=rect style="rounded,filled"]
+			R5 [label="GET /api/data-status" color="#17306E" fillcolor="#0FA3B1" fontcolor="#ffffff" penwidth=1.5 shape=rect style="rounded,filled"]
+			R6 [label="POST /api/reset-data-status" color="#17306E" fillcolor="#0FA3B1" fontcolor="#ffffff" penwidth=1.5 shape=rect style="rounded,filled"]
+			R7 [label="GET /api/health" color="#17306E" fillcolor="#0FA3B1" fontcolor="#ffffff" penwidth=1.5 shape=rect style="rounded,filled"]
+		}
+	}
+	subgraph cluster_svc {
+		color="#17306E" label="推理与服务层 Inference & Services"
+		PRED [label="RegionPredictor
+app/region_predictor.py" color="#17306E" fillcolor="#2B59C3" fontcolor="#ffffff" penwidth=1.5 shape=rect style="rounded,filled"]
+		RULE [label="推荐评分器
+距离×时间×占用率×成本" color="#17306E" fillcolor="#2B59C3" fontcolor="#ffffff" penwidth=1.5 shape=rect style="rounded,filled"]
+		CACHED1 [label=cached_all_predictions color="#17306E" fillcolor="#FFE08C" fontcolor="#1b1b1b" penwidth=1.5 shape=rect style="rounded,filled"]
+		CACHED2 [label=cached_region_24h color="#17306E" fillcolor="#FFE08C" fontcolor="#1b1b1b" penwidth=1.5 shape=rect style="rounded,filled"]
+	}
+	subgraph cluster_data {
+		color="#17306E" label="数据与模型层 Data & Models"
+		D1 [label="data/occupancy.csv" color="#17306E" fillcolor="#F2C14E" fontcolor="#1b1b1b" penwidth=1.5 shape=rect style="rounded,filled"]
+		D2 [label="data/volume.csv" color="#17306E" fillcolor="#F2C14E" fontcolor="#1b1b1b" penwidth=1.5 shape=rect style="rounded,filled"]
+		D3 [label="data/weather_central.csv" color="#17306E" fillcolor="#F2C14E" fontcolor="#1b1b1b" penwidth=1.5 shape=rect style="rounded,filled"]
+		D4 [label="data/e_price.csv" color="#17306E" fillcolor="#F2C14E" fontcolor="#1b1b1b" penwidth=1.5 shape=rect style="rounded,filled"]
+		REGIONS [label="shenzhen_regions_275.json" color="#17306E" fillcolor="#F2C14E" fontcolor="#1b1b1b" penwidth=1.5 shape=rect style="rounded,filled"]
+		MODEL [label="models/tft_high_performance.pkl" color="#17306E" fillcolor="#F2C14E" fontcolor="#1b1b1b" penwidth=1.5 shape=rect style="rounded,filled"]
+		STATUS [label="data/upload_status.json" color="#17306E" fillcolor="#F2C14E" fontcolor="#1b1b1b" penwidth=1.5 shape=rect style="rounded,filled"]
+	}
+	LOGS [label="logging 日志" color="#17306E" fillcolor="#FF8A65" fontcolor="#1b1b1b" penwidth=1.5 shape=rect style="rounded,filled"]
+	C1 -> SVC
+	C2 -> SVC
+	C3 -> SVC
+	C4 -> SVC
+	MAP -> C1 [style=dashed]
+	SVC -> R1
+	SVC -> R2
+	SVC -> R3
+	SVC -> R4
+	SVC -> R5
+	SVC -> R6
+	SVC -> R7
+	GW -> R1
+	GW -> R2
+	GW -> R3
+	GW -> R4
+	GW -> R5
+	GW -> R6
+	GW -> R7
+	R1 -> PRED
+	R2 -> PRED
+	R3 -> RULE
+	R4 -> STATUS
+	R5 -> STATUS
+	R6 -> STATUS
+	PRED -> CACHED1 [dir=both style=dashed]
+	PRED -> CACHED2 [dir=both style=dashed]
+	RULE -> PRED
+	PRED -> MODEL
+	PRED -> D1
+	PRED -> D2
+	PRED -> D3
+	PRED -> D4
+	PRED -> REGIONS
+	R4 -> D1
+	R4 -> D2
+	R4 -> D3
+	R4 -> D4
+	R4 -> STATUS
+	R4 -> PRED [label="触发加载/预测"]
+	GW -> LOGS [style=dotted]
+	R1 -> LOGS [style=dotted]
+	R2 -> LOGS [style=dotted]
+	R3 -> LOGS [style=dotted]
+	R4 -> LOGS [style=dotted]
+	R5 -> LOGS [style=dotted]
+	R6 -> LOGS [style=dotted]
+	R7 -> LOGS [style=dotted]
+	PRED -> LOGS [style=dotted]
+	RULE -> LOGS [style=dotted]
+}

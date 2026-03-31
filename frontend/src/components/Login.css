@@ -1,0 +1,16 @@
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: #f0f2f5; /* 默认浅灰背景 */
+  background-size: cover;
+  background-position: center;
+}
+
+.login-container > .ant-card {
+  position: relative;
+  z-index: 1;
+}
+
