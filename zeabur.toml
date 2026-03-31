@@ -9,22 +9,21 @@ name = "zhichong-yuntu"
 name = "backend"
 path = "./backend"
 
-# 构建命令
-buildCommand = "pip install -r requirements.txt"
+# 构建命令 - 从 backend 目录回退到根目录安装依赖
+buildCommand = "cd .. && pip install -r requirements.txt"
 
-# 启动命令
-startCommand = "uvicorn app.main:app --host 0.0.0.0 --port 8000"
+# 启动命令 - 正确指向 backend/app/main.py
+startCommand = "python -m uvicorn app.main:app --host 0.0.0.0 --port 8080"
 
 # 端口
-port = 8000
+port = 8080
 
 # 健康检查路径
 healthcheck = "/api/health"
 
 # 环境变量
 [services.backend.env]
-PORT = "8000"
-PYTHONUNBUFFERED = "1"
+PORT = "8080"
 
 # ==================== 前端服务 ====================
 [[services]]
