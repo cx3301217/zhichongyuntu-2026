@@ -7,13 +7,13 @@ name = "zhichong-yuntu"
 # ==================== 后端服务 ====================
 [[services]]
 name = "backend"
-path = "./backend"
+path = "./"
 
-# 构建命令 - 在 backend 目录构建
-buildCommand = "pip install -r requirements.txt"
+# 构建命令
+buildCommand = "pip install -r backend/requirements.txt"
 
-# 启动命令 - 使用 uvicorn --app-dir 指定 backend 为工作目录
-startCommand = "python -m uvicorn app.main:app --host 0.0.0.0 --port 8080 --app-dir backend"
+# 启动命令 - 从根目录直接引用 backend.app.main
+startCommand = "python -m uvicorn backend.app.main:app --host 0.0.0.0 --port 8080"
 
 # 端口
 port = 8080
