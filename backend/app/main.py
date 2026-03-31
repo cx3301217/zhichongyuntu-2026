@@ -27,7 +27,7 @@ app.add_middleware(
 
 # ⭐⭐⭐ 注册路由
 try:
-    from app.api import region_routes, upload_routes
+    from backend.app.api import region_routes, upload_routes
     
     # 注册区域路由
     app.include_router(

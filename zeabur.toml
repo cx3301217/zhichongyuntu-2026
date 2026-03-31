@@ -12,8 +12,9 @@ path = "./"
 # 构建命令
 buildCommand = "pip install -r backend/requirements.txt"
 
-# 启动命令 - 从根目录直接引用 backend.app.main
-startCommand = "python -m uvicorn backend.app.main:app --host 0.0.0.0 --port 8080"
+# 启动命令 - Zeabur 默认使用 uvicorn main:app
+# 根目录 main.py 会导入 backend.app.main:app
+startCommand = "uvicorn main:app --host 0.0.0.0 --port 8080"
 
 # 端口
 port = 8080
