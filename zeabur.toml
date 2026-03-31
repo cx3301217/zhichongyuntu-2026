@@ -12,8 +12,8 @@ path = "./backend"
 # 构建命令 - 在 backend 目录构建
 buildCommand = "pip install -r requirements.txt"
 
-# 启动命令 - 从 backend 目录内启动，指向 app.main
-startCommand = "cd backend && python -m uvicorn app.main:app --host 0.0.0.0 --port 8080"
+# 启动命令 - 使用 uvicorn --app-dir 指定 backend 为工作目录
+startCommand = "python -m uvicorn app.main:app --host 0.0.0.0 --port 8080 --app-dir backend"
 
 # 端口
 port = 8080
