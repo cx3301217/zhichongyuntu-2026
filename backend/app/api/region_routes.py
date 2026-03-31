@@ -57,7 +57,7 @@ def init_region_predictor():
 def load_regions_data():
     """加载区域数据"""
     global regions_data
-    regions_file = "shenzhen_regions_275.json"
+    regions_file = "backend/shenzhen_regions_275.json"
     
     if os.path.exists(regions_file):
         with open(regions_file, 'r', encoding='utf-8') as f:

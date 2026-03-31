@@ -8,7 +8,7 @@ from datetime import datetime
 from typing import Optional
 
 # 状态文件路径
-STATUS_FILE = "data/upload_status.json"
+STATUS_FILE = "backend/data/upload_status.json"
 
 def set_data_uploaded(uploaded: bool = True, upload_time: Optional[str] = None):
     """

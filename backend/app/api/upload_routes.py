@@ -16,7 +16,7 @@ router = APIRouter()
 logger = logging.getLogger(__name__)
 
 # 数据文件保存目录
-DATA_DIR = "data"
+DATA_DIR = "backend/data"
 os.makedirs(DATA_DIR, exist_ok=True)
 
 @router.post("/upload-training-data")

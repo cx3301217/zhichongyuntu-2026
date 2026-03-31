@@ -401,8 +401,8 @@ class RegionPredictor:
     
     def __init__(
         self,
-        model_path: str = "models/tft_high_performance.pkl",
-        data_dir: str = "data",
+        model_path: str = "backend/models/tft_high_performance.pkl",
+        data_dir: str = "backend/data",
         lookback: int = 48,  # ⭐ 修改为与训练一致：48小时
         horizon: int = 24
     ):
@@ -439,10 +439,10 @@ class RegionPredictor:
         """解析模型路径：若给定不存在，则尝试常见别名。"""
         candidates = [
             candidate,
-            "models/dual_tft_model_complete_cpu.pkl",
-            "models/dual_tft_model_complete_cpu_pkl",
-            "models/duai_tft_model_complete_cpu_pkl",
-            "models/best_model.pth"
+            "backend/models/dual_tft_model_complete_cpu.pkl",
+            "backend/models/dual_tft_model_complete_cpu_pkl",
+            "backend/models/duai_tft_model_complete_cpu_pkl",
+            "backend/models/best_model.pth"
         ]
         for path in candidates:
             if os.path.exists(path):
