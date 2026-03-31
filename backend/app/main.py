@@ -20,10 +20,9 @@ app = FastAPI(
 # ⭐⭐⭐ 配置CORS - 非常重要！
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # 允许所有来源
-    allow_credentials=True,
-    allow_methods=["*"],  # 允许所有方法
-    allow_headers=["*"],  # 允许所有头部
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # ⭐⭐⭐ 注册路由
