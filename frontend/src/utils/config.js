@@ -3,7 +3,7 @@ export const CONFIG = {
   // 🎯 后端API地址
   // 开发环境: localhost:8000
   // 生产环境: 自动使用环境变量或相对路径（通过代理）
-  API_BASE_URL: process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000',
+  API_BASE_URL: process.env.REACT_APP_API_BASE_URL || 'https://zhichongyuntu.zeabur.app/api',
   
   // 🗺️ 高德地图配置（使用您的Key）
   AMAP_KEY: '380c947d5057e79f18474eb97d757554',  // Web端Key
