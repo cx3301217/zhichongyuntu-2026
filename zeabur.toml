@@ -9,11 +9,11 @@ name = "zhichong-yuntu"
 name = "backend"
 path = "./backend"
 
-# 构建命令 - 从 backend 目录回退到根目录安装依赖
-buildCommand = "cd .. && pip install -r requirements.txt"
+# 构建命令 - 在 backend 目录构建
+buildCommand = "pip install -r requirements.txt"
 
-# 启动命令 - 正确指向 backend/app/main.py
-startCommand = "python -m uvicorn app.main:app --host 0.0.0.0 --port 8080"
+# 启动命令 - 从 backend 目录内启动，指向 app.main
+startCommand = "cd backend && python -m uvicorn app.main:app --host 0.0.0.0 --port 8080"
 
 # 端口
 port = 8080
