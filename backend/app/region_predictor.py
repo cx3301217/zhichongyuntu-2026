@@ -12,6 +12,14 @@ import time
 import os
 
 # ============================================
+# CPU 环境兜底：Zeabur 容器无 GPU，强制禁用 CUDA，
+# 确保任何 pickle / torch.load 路径都不会尝试访问 GPU。
+# ============================================
+torch.cuda.is_available = lambda: False
+torch.cuda.device_count = lambda: 0
+torch.cuda._cached_device_count = 0
+
+# ============================================
 # 模型结构定义（与训练时完全相同）
 # ============================================
 
