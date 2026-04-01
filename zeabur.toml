@@ -10,7 +10,7 @@ name = "backend"
 path = "./"
 
 # 构建命令
-buildCommand = "pip install -r backend/requirements.txt"
+buildCommand = "git lfs install && git lfs pull && pip install -r backend/requirements.txt"
 
 # 启动命令 - Zeabur 默认使用 uvicorn main:app
 # 根目录 main.py 会导入 backend.app.main:app

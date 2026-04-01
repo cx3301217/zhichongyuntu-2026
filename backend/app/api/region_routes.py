@@ -40,7 +40,7 @@ def init_region_predictor():
     try:
         from backend.app.region_predictor import RegionPredictor
         region_predictor = RegionPredictor(
-            model_path="models/tft_high_performance.pkl"  # 使用高性能TFT模型（R²>0.90）
+            model_path="backend/models/tft_high_performance.pkl"  # 使用高性能TFT模型（R²>0.90）
         )
         # 自动加载数据
         if not region_predictor.data_loaded:
