@@ -461,12 +461,10 @@ class RegionPredictor:
 
             # 根据文件扩展名选择加载方式
             if resolved_path.endswith('.pkl'):
-                # 使用pickle加载（对应train_tft_high_performance.py的保存方式）
-                import pickle
-                with open(resolved_path, 'rb') as f:
-                    checkpoint = pickle.load(f)
+                # 模型用 torch.save 存入 pickle，底层包含 CUDA 设备信息，
+                # 必须用 torch.load 并指定 map_location='cpu' 才能在无 GPU 环境加载
+                checkpoint = torch.load(resolved_path, map_location='cpu')
             else:
-                # 使用torch.load加载.pth文件
                 checkpoint = torch.load(resolved_path, map_location=self.device)
 
             # 检查文件格式
