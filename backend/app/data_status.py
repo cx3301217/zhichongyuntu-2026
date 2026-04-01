@@ -7,8 +7,9 @@ import json
 from datetime import datetime
 from typing import Optional
 
-# 状态文件路径
-STATUS_FILE = "backend/data/upload_status.json"
+# 状态文件路径（基于 __file__ 推导，兼容本地开发和容器）
+_STATUS_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "data"))
+STATUS_FILE = os.path.join(_STATUS_DIR, "upload_status.json")
 
 def set_data_uploaded(uploaded: bool = True, upload_time: Optional[str] = None):
     """

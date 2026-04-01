@@ -15,8 +15,9 @@ from backend.app.data_status import set_data_uploaded, get_data_status, reset_da
 router = APIRouter()
 logger = logging.getLogger(__name__)
 
-# 数据文件保存目录
-DATA_DIR = "backend/data"
+# 数据文件保存目录（基于 __file__ 推导，兼容本地开发和容器）
+_DATA_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "data"))
+DATA_DIR = _DATA_DIR
 os.makedirs(DATA_DIR, exist_ok=True)
 
 @router.post("/upload-training-data")

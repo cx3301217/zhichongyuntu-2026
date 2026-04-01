@@ -40,7 +40,7 @@ def init_region_predictor():
     try:
         from backend.app.region_predictor import RegionPredictor
         region_predictor = RegionPredictor(
-            model_path="backend/models/tft_high_performance.pkl"  # 使用高性能TFT模型（R²>0.90）
+            model_path="tft_high_performance.pkl"  # 使用高性能TFT模型（R²>0.90）
         )
         # 自动加载数据
         if not region_predictor.data_loaded:
@@ -57,7 +57,8 @@ def init_region_predictor():
 def load_regions_data():
     """加载区域数据"""
     global regions_data
-    regions_file = "backend/shenzhen_regions_275.json"
+        _base = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+        regions_file = os.path.join(_base, "shenzhen_regions_275.json")
     
     if os.path.exists(regions_file):
         with open(regions_file, 'r', encoding='utf-8') as f:

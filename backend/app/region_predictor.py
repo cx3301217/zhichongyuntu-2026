@@ -409,16 +409,28 @@ class RegionPredictor:
     
     def __init__(
         self,
-        model_path: str = "backend/models/tft_high_performance.pkl",
-        data_dir: str = "backend/data",
+        model_path: str = "tft_high_performance.pkl",
+        data_dir: str = "data",
         lookback: int = 48,  # ⭐ 修改为与训练一致：48小时
         horizon: int = 24
     ):
         """
         初始化预测器
         """
-        self.model_path = model_path
-        self.data_dir = data_dir
+        _base = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+        _models_base = os.path.join(_base, "models")
+        _data_base = os.path.join(_base, "data")
+
+        self.model_path = (
+            model_path
+            if os.path.isabs(model_path)
+            else os.path.join(_models_base, model_path)
+        )
+        self.data_dir = (
+            data_dir
+            if os.path.isabs(data_dir)
+            else os.path.join(_data_base, data_dir)
+        )
         self.lookback = lookback
         self.horizon = horizon
         self.device = torch.device('cpu')
@@ -444,15 +456,19 @@ class RegionPredictor:
         print(f"   - 预测窗口: {horizon}小时")
     
     def _resolve_model_path(self, candidate: str) -> str:
-        """解析模型路径：若给定不存在，则尝试常见别名。"""
-        candidates = [
+        """解析模型路径：若给定不存在，则尝试常见别名（均使用绝对路径）。"""
+        _base = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+        _models_dir = os.path.join(_base, "models")
+
+        aliases = [
             candidate,
-            "backend/models/dual_tft_model_complete_cpu.pkl",
-            "backend/models/dual_tft_model_complete_cpu_pkl",
-            "backend/models/duai_tft_model_complete_cpu_pkl",
-            "backend/models/best_model.pth"
+            "dual_tft_model_complete_cpu.pkl",
+            "dual_tft_model_complete_cpu_pkl",
+            "duai_tft_model_complete_cpu_pkl",
+            "best_model.pth",
         ]
-        for path in candidates:
+        for name in aliases:
+            path = name if os.path.isabs(name) else os.path.join(_models_dir, name)
             if os.path.exists(path):
                 return path
         # 若都找不到，返回原路径（让上层抛错）
