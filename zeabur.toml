@@ -32,7 +32,7 @@ name = "frontend"
 path = "./frontend"
 
 # 构建命令
-buildCommand = "npm install && npm run build"
+buildCommand = "npm ci --legacy-peer-deps && CI=false GENERATE_SOURCEMAP=false NODE_OPTIONS=--max_old_space_size=512 npm run build"
 
 # 启动命令 - 使用 serve 静态文件服务
 startCommand = "npx serve -s build -l 3000"
