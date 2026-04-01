@@ -19,10 +19,8 @@ ENV NODE_OPTIONS=--max_old_space_size=512
 
 RUN npm run build
 
-# 生产镜像：使用轻量 web 服务器
+# 生产镜像：使用轻量 web 服务器（npx 替代全局安装，避免 lock 文件不一致）
 FROM node:22-alpine
-
-RUN npm install -g serve
 
 WORKDIR /app
 
@@ -30,4 +28,4 @@ COPY --from=builder /app/build ./build
 
 EXPOSE 3000
 
-CMD ["serve", "-s", "build", "-l", "3000"]
+CMD ["npx", "serve", "-s", "build", "-l", "3000"]
