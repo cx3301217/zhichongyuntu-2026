@@ -1,0 +1,13 @@
+# Ignore everything
+*
+
+# But allow these
+!package.json
+!package-lock.json
+!public/
+!src/
+
+# Ignore large/irrelevant files
+.git
+.gitignore
+*.md
