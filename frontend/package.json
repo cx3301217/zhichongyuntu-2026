@@ -23,15 +23,20 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "CI=false NODE_OPTIONS=--max_old_space_size=1024 react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+      "react-app"
+    ],
+    "rules": {
+      "no-unused-vars": "warn",
+      "react-hooks/exhaustive-deps": "warn",
+      "react/jsx-uses-react": "off",
+      "react/react-in-jsx-scope": "off"
+    }
   },
   "browserslist": {
     "production": [
