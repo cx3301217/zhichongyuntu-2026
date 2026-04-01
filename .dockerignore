@@ -1,0 +1,53 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Node modules (frontend uses npm ci, backend not needed for frontend build)
+node_modules
+backend/venv
+backend/__pycache__
+backend/.venv
+
+# Python
+*.pyc
+*.pyo
+__pycache__
+*.egg-info
+.eggs
+
+# Large data files (never needed for frontend build)
+*.pkl
+*.pth
+*.pt
+*.h5
+*.parquet
+*.csv
+*.zip
+*.tar
+*.tar.gz
+
+# Model directories
+backend/models
+backend/data
+backend/logs
+backend/checkpoints
+
+# Virtual environments
+.venv
+venv
+env
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docs
+*.md
+!README.md
